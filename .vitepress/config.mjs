@@ -20,7 +20,8 @@ export default defineConfig({
           { text: '数值属性', link: '/rules/numerical-attributes' },
           { text: '理念等级', link: '/rules/character-level' }
 
-        ]
+        ],
+        text: '📖 武器书'    
       }
     ],
 
