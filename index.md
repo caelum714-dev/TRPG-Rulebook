@@ -11,15 +11,9 @@ hero:
       text: 开始阅读规则
       link: /rules/chapter1
     - theme: alt
-      text: 角色卡
-      link: /
+      text: 武器书
+      link: /rules/weapons/index
 
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+
 ---
 

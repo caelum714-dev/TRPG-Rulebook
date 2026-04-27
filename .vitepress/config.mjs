@@ -19,9 +19,15 @@ export default defineConfig({
           { text: '多维自我 (ALTER EGO, 被动能力)', link: '/rules/alter-ego' },
           { text: '数值属性', link: '/rules/numerical-attributes' },
           { text: '理念等级', link: '/rules/character-level' }
+        ] 
+      },
 
-        ],
-        text: '📖 武器书'    
+      {
+        text: '⚔️ 武器书',
+        items: [
+          { text: '武器总览', link: '/rules/weapons/index' },
+
+        ]
       }
     ],
 
