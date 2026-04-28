@@ -7,7 +7,7 @@ export default defineConfig({
     search: {
       provider: 'local',
       options: {
-        _renderDetailedResults: true，
+        _renderDetailedResults: true,
         locales: {
           root: {
             translations: {
