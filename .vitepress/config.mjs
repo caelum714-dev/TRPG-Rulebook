@@ -22,11 +22,27 @@ export default defineConfig({
         ] 
       },
 
-      {
-        text: '⚔️ 武器书',
+      {   
+        text: '📦 装备书',
+        collapsed: false, // 装备大类默认展开
         items: [
-          { text: '武器总览', link: '/rules/weapons/index' },
-
+          { text: '装备使用须知', link: '/rules/equipment/index' },
+          {
+            text: '🗡️ 武器书 (按类型分类)',
+            collapsed: true, // 武器库默认折叠，点开才看5大类
+            items: [
+              { text: '导言', link: '/rules/equipment/weapons/index'},
+              { text: '动能兵械', link: '/rules/equipment/weapons/weaponsDN'},
+              { text: '自赋能兵械', link: '/rules/equipment/weapons/weaponsZF' },
+              { text: '自动导器', link: '/rules/equipment/weapons/daoqiZD' },
+              { text: '导器', link: '/rules/equipment/weapons/daoqi' },
+              { text: '祭器', link: '/rules/equipment/weapons/JiQi' },
+            ]
+          },
+          {
+            text: '🛡️ 防具库',
+            link: '/rules/equipment/armors'
+          }
         ]
       }
     ],
