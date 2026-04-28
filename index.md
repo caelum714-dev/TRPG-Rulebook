@@ -11,8 +11,8 @@ hero:
       text: 开始阅读规则
       link: /rules/chapter1
     - theme: alt
-      text: 武器书
-      link: /rules/weapons/index
+      text: 装备书
+      link: /rules/equipment/index
 
 
 ---
