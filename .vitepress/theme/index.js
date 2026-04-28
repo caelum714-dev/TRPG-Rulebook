@@ -1,51 +1,63 @@
-// .vitepress/theme/index.js
-
-// 1. 引入 VitePress 官方的默认主题
 import DefaultTheme from 'vitepress/theme'
-
-// 2. 引入你自己的 CSS 样式文件（名字要和第三步建的文件名一致）
-import './style.css' 
-
-// 引入 Vue 和 VitePress 的相关 API，用于写页面逻辑
 import { watch, onMounted } from 'vue'
 import { useRoute } from 'vitepress'
+import './style.css' // 确保这里是你真实的 css 文件名
 
 export default {
-  // 继承官方主题（保留官方的导航栏、侧边栏等一切好用的东西）
-  extends: DefaultTheme, 
-
-  // setup() 函数会在每次页面加载时执行
+  extends: DefaultTheme,
+  
   setup() {
     const route = useRoute()
 
-    // 自动展开折叠面板的逻辑
     const autoOpenDetails = () => {
       if (typeof window === 'undefined') return 
       
       const hash = decodeURIComponent(window.location.hash)
       if (!hash) return
 
+      // 【修改1】把延迟调大到 300ms，确保搜索弹窗完全关闭、Vue 渲染完毕
       setTimeout(() => {
         try {
-          const targetElement = document.querySelector(hash)
+          const id = hash.slice(1)
+          const targetElement = document.getElementById(id)
+          
           if (targetElement) {
-            const parentDetails = targetElement.closest('details')
-            if (parentDetails && !parentDetails.hasAttribute('open')) {
-              parentDetails.setAttribute('open', '')
+            // 【核心修改】：开启“剥洋葱”模式，向上遍历并打开所有层级的 details
+            let currentElement = targetElement;
+            
+            while (currentElement) {
+              const parentDetails = currentElement.closest('details')
+              
+              if (parentDetails) {
+                // 如果找到了 details，且没打开，就打开它
+                if (!parentDetails.hasAttribute('open')) {
+                  parentDetails.setAttribute('open', '')
+                }
+                // 把起点移到这个 details 的外面，继续向更外层寻找
+                currentElement = parentDetails.parentElement
+              } else {
+                // 如果找不到更多的 details 了，说明已经到了最外层，跳出循环
+                break 
+              }
             }
+            
+            // 等所有“俄罗斯套娃”都被打开后，再执行平滑滚动！
+            setTimeout(() => {
+               targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            }, 50) 
           }
         } catch (error) {
-          // 忽略查询选择器错误
+          console.warn("自动展开面板时发生小错误:", error)
         }
-      }, 150)
+      }, 300) 
+      
+      // ... 后面的代码保持不变 ...
     }
 
-    // 页面初次加载时执行
     onMounted(() => {
       autoOpenDetails() 
     })
 
-    // 页面内路由（点击链接/搜索）变化时执行
     watch(
       () => route.path + route.hash, 
       () => autoOpenDetails()
