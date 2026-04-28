@@ -2,9 +2,11 @@
 
 :::: details 🏢 西川霊術重工株式会社（Nishikawa Reijutsu Jūkō）
 
+#### 西川霊術重工株式会社（Nishikawa Reijutsu Jūkō）导器
+
 ::: details ◢ III级·鬼方9式“云外镜”铳型导器
 
-#### III级·鬼方9式“云外镜”铳型导器
+#### 鬼方9式“云外镜”铳型导器
 
 **【分类】**: 远程，导器
 
@@ -37,7 +39,8 @@
 :::
 
 ::: details ◢ III级·鬼方7式“针女”铳型导器
-<span style="display: none;">鬼方7式“针女”铳型导器</span>
+
+#### 鬼方7式“针女”铳型导器
 
 **【分类】**: 近程，导器
 
@@ -71,10 +74,12 @@
 ::::
 
 :::: details 🏢 新血股份有限公司Sangre de Nova S.A.（理查德基金会＆汀芽生态）
-<span style="display: none;">新血股份有限公司Sangre de Nova S.A.（理查德基金会＆汀芽生态）</span>
+
+#### 新血股份有限公司Sangre de Nova S.A.（理查德基金会＆汀芽生态） 导器
 
 ::: details ◢ ？级·SN-101 “流素”杖型导器
-<span style="display: none;">SN-101 “流素”杖型导器</span>
+
+#### SN-101 “流素”杖型导器
 
 **【分类】**: 近距离，导器
 
@@ -106,7 +111,8 @@
 :::
 
 ::: details ◢ ？级·SN-103 “静溪”匣型导器
-<span style="display: none;">SN-103 “静溪”匣型导器</span>
+
+#### SN-103 “静溪”匣型导器
 
 **【分类】**: 近距离，导器
 
@@ -147,10 +153,12 @@
 ::::
 
 :::: details 🏢 天工峡集团
-<span style="display: none;">天工峡集团</span>
+
+#### 天工峡集团 导器
 
 ::: details ◢ ？级·“行禅”杖型导器
-<span style="display: none;">“行禅”杖型导器</span>
+
+#### “行禅”杖型导器
 
 **【分类】**: 近距离，导器
 
@@ -177,7 +185,8 @@
 :::
 
 ::: details ◢ ？级·“韵缻”缶型导器
-<span style="display: none;">“韵缻”缶型导器</span>
+
+#### “韵缻”缶型导器
 
 **【分类】**: 近距离，导器
 
@@ -218,7 +227,8 @@
 ::::
 
 :::: details 🏢 万神都国际＆梵天武库Armement Céleste
-<span style="display: none;">万神都国际＆梵天武库Armement Céleste</span>
+
+#### 万神都国际＆梵天武库Armement Céleste 导器
 
 ::: details ◢ ？级·R6谐秩 铳型导器
 <span style="display: none;">R6谐秩 铳型导器</span>
@@ -254,7 +264,8 @@
 :::
 
 ::: details ◢ ？级·PB16 梅塔特隆 匣型导器
-<span style="display: none;">PB16 梅塔特隆 匣型导器</span>
+
+#### PB16 梅塔特隆 匣型导器
 
 **【分类】**: 近距离，导器，双持
 
@@ -293,7 +304,8 @@
 :::
 
 ::: details ◢ ？级·PB15 唯一点 匣型导器
-<span style="display: none;">PB15 唯一点 匣型导器</span>
+
+#### PB15 唯一点 匣型导器
 
 **【分类】**: 中距离，导器
 
