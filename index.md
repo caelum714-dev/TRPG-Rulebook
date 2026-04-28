@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读规则
-      link: /rules/chapter1
+      link: /rules/based-rule/index
     - theme: alt
       text: 装备书
       link: /rules/equipment/index
