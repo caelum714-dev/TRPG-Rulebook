@@ -56,6 +56,7 @@ export default {
 
     onMounted(() => {
       autoOpenDetails() 
+      window.addEventListener('hashchange', autoOpenDetails)
     })
 
     watch(
