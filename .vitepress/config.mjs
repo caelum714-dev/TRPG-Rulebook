@@ -7,6 +7,7 @@ export default defineConfig({
     search: {
       provider: 'local',
       options: {
+        _renderDetailedResults: true，
         locales: {
           root: {
             translations: {
@@ -27,7 +28,8 @@ export default defineConfig({
           }
         }
       }
-    },// 顶部导航栏
+    },
+    
     nav: [
       { text: '首页', link: '/' },
       { text: '规则书', link: '/rules/based-rule/index' }
