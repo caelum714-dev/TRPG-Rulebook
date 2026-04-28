@@ -289,9 +289,9 @@
 
 :::
 
-::: details 🏢 万神都国际＆梵天武库Armement Céleste
+::::
 
-:::
+:::: details 🏢 万神都国际＆梵天武库Armement Céleste
 
 ::: details ◢ ?级·C2 幂 折叠手弩
 
