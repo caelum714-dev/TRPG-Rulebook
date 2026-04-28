@@ -1,7 +1,7 @@
 import DefaultTheme from 'vitepress/theme'
 import { watch, onMounted } from 'vue'
 import { useRoute } from 'vitepress'
-import './style.css' // 确保这里是你真实的 css 文件名
+import './style.css' 
 
 export default {
   extends: DefaultTheme,
@@ -10,7 +10,7 @@ export default {
     const route = useRoute()
 
     const autoOpenDetails = () => {
-      if (typeof window === 'undefined') return 
+      if (typeof window === 'undefined') return  
       
       const hash = decodeURIComponent(window.location.hash)
       if (!hash) return
@@ -47,16 +47,16 @@ export default {
             }, 50) 
           }
         } catch (error) {
-          console.warn("自动展开面板时发生小错误:", error)
+          console.warn("自动展开面板时发生小错误:", error) // 这里捕获错误，避免因为某个元素的问题导致整个功能崩溃
         }
       }, 300) 
       
-      // ... 后面的代码保持不变 ...
+    
     }
 
     onMounted(() => {
       autoOpenDetails() 
-      window.addEventListener('hashchange', autoOpenDetails)
+      window.addEventListener('hashchange', autoOpenDetails) // 记得在组件卸载时清理事件监听器，避免内存泄漏,但在 VitePress 里通常不需要担心这个问题，因为页面切换时会完全卸载组件。
     })
 
     watch(
