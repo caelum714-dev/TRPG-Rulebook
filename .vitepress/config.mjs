@@ -4,7 +4,30 @@ export default defineConfig({
   title: "蜃都群屿规则书",
   description: "我受够了word文档！",
   themeConfig: {
-    // 顶部导航栏
+    search: {
+      provider: 'local',
+      options: {
+        locales: {
+          root: {
+            translations: {
+              button: {
+                buttonText: '搜索规则书...',
+                buttonAriaLabel: '搜索规则书'
+              },
+              modal: {
+                noResultsText: '未找到相关结果',
+                resetButtonTitle: '清除查询条件',
+                footer: {
+                  selectText: '选择',
+                  navigateText: '切换',
+                  closeText: '关闭'
+                }
+              }
+            }
+          }
+        }
+      }
+    },// 顶部导航栏
     nav: [
       { text: '首页', link: '/' },
       { text: '规则书', link: '/rules/based-rule/index' }
@@ -45,6 +68,15 @@ export default defineConfig({
             link: '/rules/equipment/armors'
           }
         ]
+      },
+      {
+        text: '🗺️ 地理志',
+        collapsed: false, // 地理大类默认展开
+        items: [
+          { text: '地理志总览', link: '/rules/geography/index' },
+          { text: '上层区', link: '/rules/geography/upper-zone' },
+          { text: '中层区', link: '/rules/geography/middle-zone' },
+          { text: '下层区', link: '/rules/geography/lower-zone' },]
       }
     ],
 

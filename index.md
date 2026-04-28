@@ -13,6 +13,9 @@ hero:
     - theme: alt
       text: 装备书
       link: /rules/equipment/index
+    - theme: alt
+      text: 地理志
+      link: /rules/geograph/index
 
 
 ---
