@@ -32,9 +32,9 @@ export default defineConfig({
             collapsed: true, // 武器库默认折叠，点开才看5大类
             items: [
               { text: '导言', link: '/rules/equipment/weapons/index'},
-              { text: '动能兵械', link: '/rules/equipment/weapons/weaponsDN'},
-              { text: '自赋能兵械', link: '/rules/equipment/weapons/weaponsZF' },
-              { text: '自动导器', link: '/rules/equipment/weapons/daoqiZD' },
+              { text: '自赋能兵械', link: '/rules/equipment/weapons/weaponsZF'},
+              { text: '动能兵械', link: '/rules/equipment/weapons/weaponsDN' },
+              { text: '自导器', link: '/rules/equipment/weapons/daoqiZD' },
               { text: '导器', link: '/rules/equipment/weapons/daoqi' },
               { text: '祭器', link: '/rules/equipment/weapons/JiQi' },
             ]
