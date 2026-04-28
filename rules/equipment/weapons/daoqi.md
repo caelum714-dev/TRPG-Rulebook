@@ -2,11 +2,11 @@
 
 :::: details 🏢 西川霊術重工株式会社（Nishikawa Reijutsu Jūkō）
 
-<span style="display: none;">西川灵术重工株式会社</span>
+<span class="search-hidden"> 西川霊術重工株式会社</span>
 
 ::: details ◢ III级·鬼方9式“云外镜”铳型导器
 
-<span style="display: none;">鬼方9式“云外镜”铳型导器</span>
+<span class="search-hidden">鬼方9式“云外镜”铳型导器</span>
 
 **【分类】**: 远程，导器
 
