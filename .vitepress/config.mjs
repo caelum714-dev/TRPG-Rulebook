@@ -62,7 +62,7 @@ export default defineConfig({
             text: '🗡️ 武器书 (按类型分类)',
             collapsed: true, // 
             items: [
-              { text: '导言', link: '/rules/equipment/weapons/index'},
+              { text: '导言', link: '/rules/equipment/weapons/'},
               { text: '自赋能兵械', link: '/rules/equipment/weapons/weaponsZF'},
               { text: '动能兵械', link: '/rules/equipment/weapons/weaponsDN' },
               { text: '自导器', link: '/rules/equipment/weapons/daoqiZD' },
