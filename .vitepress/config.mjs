@@ -7,18 +7,19 @@ export default defineConfig({
     // 顶部导航栏
     nav: [
       { text: '首页', link: '/' },
-      { text: '规则书', link: '/rules/standard-attributes' }
+      { text: '规则书', link: '/rules/based-rule/index' }
     ],
 
     // 左侧侧边栏
     sidebar: [
       {
         text: '📖 角色创建',
+        collapsed: false, // 装备大类默认展开
         items: [
-          { text: '本格属性', link: '/rules/standard-attributes' },
-          { text: '多维自我 (ALTER EGO, 被动能力)', link: '/rules/alter-ego' },
-          { text: '数值属性', link: '/rules/numerical-attributes' },
-          { text: '理念等级', link: '/rules/character-level' }
+          { text: '本格属性', link: '/rules/based-rule/standard-attributes' },
+          { text: '多维自我 (ALTER EGO, 被动能力)', link: '/rules/based-rule/alter-ego' },
+          { text: '数值属性', link: '/rules/based-rule/numerical-attributes' },
+          { text: '理念等级', link: '/rules/based-rule/character-level' }
         ] 
       },
 
@@ -29,7 +30,7 @@ export default defineConfig({
           { text: '装备使用须知', link: '/rules/equipment/index' },
           {
             text: '🗡️ 武器书 (按类型分类)',
-            collapsed: true, // 武器库默认折叠，点开才看5大类
+            collapsed: true, // 
             items: [
               { text: '导言', link: '/rules/equipment/weapons/index'},
               { text: '自赋能兵械', link: '/rules/equipment/weapons/weaponsZF'},
