@@ -10,7 +10,7 @@ export default defineConfig({
         _renderDetailedResults: true,
         miniSearch: {
       searchOptions: {
-        combineWith: 'AND' // 将默认的 OR 组合逻辑改成 AND（必须同时包含）
+        combineWith: 'AND' 
       }
     },
         locales: {
@@ -55,9 +55,9 @@ export default defineConfig({
 
       {   
         text: '📦 装备书',
-        collapsed: false, // 装备大类默认展开
+        collapsed: false, 
         items: [
-          { text: '装备使用须知', link: '/rules/equipment/index' },
+          { text: '装备使用须知', link: '/rules/equipment/' },
           {
             text: '🗡️ 武器书 (按类型分类)',
             collapsed: true, // 
@@ -79,7 +79,7 @@ export default defineConfig({
       
       {
         text: '🗺️ 地理志',
-        collapsed: false, // 地理大类默认展开
+        collapsed: false, 
         items: [
           { text: '地理志总览', link: '/rules/geography/index' },
           { text: '上层区', link: '/rules/geography/upper-zone' },
@@ -88,7 +88,6 @@ export default defineConfig({
       }
     ],
 
-    // 右上角的社交链接（不想显示可以把这块删掉，但要保留括号）
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
     ]
