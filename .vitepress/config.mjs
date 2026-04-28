@@ -8,6 +8,11 @@ export default defineConfig({
       provider: 'local',
       options: {
         _renderDetailedResults: true,
+        miniSearch: {
+      searchOptions: {
+        combineWith: 'AND' // 将默认的 OR 组合逻辑改成 AND（必须同时包含）
+      }
+    },
         locales: {
           root: {
             translations: {
