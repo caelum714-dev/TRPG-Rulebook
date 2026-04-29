@@ -19,20 +19,6 @@
   overflow: hidden;
 }
 
-/* 巨大的透明背景引号 */
-.lore-prologue::before {
-  content: '“';
-  position: absolute;
-  top: -20px;
-  left: 10px;
-  font-size: 120px;
-  line-height: 1;
-  font-family: serif;
-  color: var(--vp-c-text-1);
-  opacity: 0.05; /* 极低的透明度，只做背景装饰 */
-  pointer-events: none;
-}
-
 /* 引言正文：使用倾斜的衬线体（宋体） */
 .lore-prologue .quote-text {
   position: relative;
