@@ -97,7 +97,7 @@ export default defineConfig({
         text: '物品书',
         collapsed: false,
         items: [
-          { text: '载具', link: '/rules/items/vehicleDN' }
+          { text: '载具', link: '/rules/item/vehicleDN' }
         ]
       }
     ],
