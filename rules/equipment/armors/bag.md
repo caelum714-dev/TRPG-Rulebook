@@ -2,7 +2,7 @@
 
 :::: details 胖喜鹊
 
-::: detials 城市向导挎包
+::: details 城市向导挎包
 
 #### 城市向导挎包 City Guide Urban 10
 
@@ -22,7 +22,7 @@
 
 :::: details 天工峡集团
 
-::: detials 浪客行囊 
+::: details 浪客行囊 
 
 #### 浪客行囊 Wandering Drawstring 15
 
@@ -44,7 +44,7 @@
 
 :::: details kroach
 
-::: detials  寇驰真皮包
+::: details  寇驰真皮包
 
 #### 寇驰真皮包 kroach shoulder bag 10
 
@@ -66,7 +66,7 @@
 
 :::: details 陆行鸟
 
-::: detials 穿堂风轻征
+::: details 穿堂风轻征
 
 #### 穿堂风轻征 Draft Lite 20
 
@@ -82,7 +82,7 @@
 
 :::
 
-::: detials 废墟远征
+::: details 废墟远征
 
 #### 废墟远征 Ruins Expedition 25
 
