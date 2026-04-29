@@ -358,7 +358,7 @@
 
 :::: 
 
-:::: details 新血股份有限公司Sangre de Nova S.A.（理查德基金会＆汀芽生态
+:::: details 新血股份有限公司Sangre de Nova S.A.（理查德基金会＆汀芽生态）
 
 ::: details 石棉防火服
 
