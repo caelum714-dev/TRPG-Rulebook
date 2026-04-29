@@ -1,4 +1,4 @@
-export const equipments = [
+export const bags = [
   {
     "id": "bag_1_1777489715094",
     "name": "城市向导挎包 City Guide Urban 10",

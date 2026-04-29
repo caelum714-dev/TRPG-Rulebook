@@ -4,7 +4,7 @@ import path from 'path';
 // 【关键修改 1】：这里直接精确指向你的具体文件 bag.md
 const mdFile = path.join(process.cwd(), 'rules/equipment/armors/bag.md'); 
 // 生成的数据依然放在 theme 目录下
-const outputFile = path.join(process.cwd(), '.vitepress/theme/equipmentData.js');
+const outputFile = path.join(process.cwd(), '.vitepress/theme/database/bag.js');
 
 function parseMarkdownToData() {
   let allEquipments = [];
