@@ -1,7 +1,7 @@
 ### 载具
 
 <div class="lore-prologue">
-  <p class="quote-text">“我们不生产代步工具。我们负责重新定义这颗星球的地平线。”</p>
+  <p class="quote-text">我们不生产代步工具。我们负责重新定义这颗星球的地平线。</p>
   <p class="quote-author">—— <span class="gold-name">阿尔伯塔·德尔绍</span></p>
 </div>
 
