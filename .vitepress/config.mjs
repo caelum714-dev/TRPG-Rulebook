@@ -70,9 +70,15 @@ export default defineConfig({
               { text: '祭器', link: '/rules/equipment/weapons/JiQi' },
             ]
           },
+
           {
             text: '🛡️ 防具库',
-            link: '/rules/equipment/armors'
+            collapsed: true,
+            items: [
+              { text: '防具', link: '/rules/equipment/armors/armor'},
+              { text: '护盾', link: '/rules/equipment/armors/shield' },
+              { text: '背包', link: '/rules/equipment/armors/bag' },
+            ]
           }
         ]
       },
