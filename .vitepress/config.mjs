@@ -87,10 +87,18 @@ export default defineConfig({
         text: '🗺️ 地理志',
         collapsed: false, 
         items: [
-          { text: '地理志总览', link: '/rules/geography/index' },
+          { text: '地理志总览', link: '/rules/geography/' },
           { text: '上层区', link: '/rules/geography/upper-zone' },
           { text: '中层区', link: '/rules/geography/middle-zone' },
           { text: '下层区', link: '/rules/geography/lower-zone' },]
+      },
+
+      {
+        text: '物品书',
+        collapsed: false,
+        items: [
+          { text: '载具', link: '/rules/items/vehicleDN' }
+        ]
       }
     ],
 
