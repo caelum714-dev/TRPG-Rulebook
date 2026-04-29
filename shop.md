@@ -5,8 +5,8 @@ title: 黑市采购终端
 
 <script setup>
 // 因为在根目录，所以只需要进 .vitepress 就行
-// import ShopTerminal from './.vitepress/theme/ShopTerminal.vue'
-// import { equipments } from './.vitepress/theme/equipmentData.js'
+import ShopTerminal from './.vitepress/theme/ShopTerminal.vue'
+import { equipments } from './.vitepress/theme/equipmentData.js'
 
 // 如果你以后有了 weaponData.js，也可以在这里一起 import
 // import { weapons } from './.vitepress/theme/weaponData.js'
