@@ -50,23 +50,21 @@
    ========================================= */
 
 details h1 {
-  font-size: 1.4em; 
+  /* 视觉上彻底隐藏标题，点开卡片直接显示纯净正文，完美保留锚点功能 */
+  display: block;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
 }
 
-/* 针对折叠栏里的 ## (二级标题) */
 details h2 {
-  font-size: 1.25em; 
-}
-
-/* 针对折叠栏里的 ### (三级标题) */
-details h3 {
-  font-size: 1.15em; 
-}
-
-details h4 {
-  font-size: 1.00em; 
-}
-
-details h5 {
-  font-size: 0.85em; 
+  /* 视觉上彻底隐藏标题，点开卡片直接显示纯净正文，完美保留锚点功能 */
+  display: block;
+  height: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
 }

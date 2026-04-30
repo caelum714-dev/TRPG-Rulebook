@@ -20,12 +20,12 @@ function parseMarkdownToData() {
 
     const content = fs.readFileSync(mdFile, 'utf-8');
     
-    // 使用多行模式 (^####) 进行切分，这比之前的切分更精准
-    const blocks = content.split(/(?=^####\s)/m);
+    // 使用多行模式 (^#) 进行切分，这比之前的切分更精准
+    const blocks = content.split(/(?=^##\s)/m);
 
     blocks.forEach((block, index) => {
       // 必须匹配标题，且允许标题后带任意空格
-      const nameMatch = block.match(/^####\s+(.*)/m);
+      const nameMatch = block.match(/^##\s+(.*)/m);
       if (!nameMatch) return;
 
       // 【核心修复】：使用 [：:\s]+ 完美兼容中文冒号、英文冒号和多余的空格

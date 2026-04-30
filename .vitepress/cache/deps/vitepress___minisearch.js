@@ -735,7 +735,7 @@ var MiniSearch = class _MiniSearch {
    * {@link MiniSearch.replace} method can also be used to replace a document
    * with a new version.
    *
-   * #### Details about vacuuming
+   * # Details about vacuuming
    *
    * Repetite calls to this method would leave obsolete document references in
    * the index, invisible to searches. Two mechanisms take care of cleaning up:

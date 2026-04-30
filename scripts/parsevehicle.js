@@ -20,12 +20,12 @@ function parseVehiclesToData() {
 
     const content = fs.readFileSync(mdFile, 'utf-8');
     
-    // 【核心修复】：像 bag 一样，直接用 #### 标题进行切分，无视任何 ::: details
-    const blocks = content.split(/(?=^####\s)/m);
+    // 【核心修复】：像 bag 一样，直接用 # 标题进行切分，无视任何 ::: details
+    const blocks = content.split(/(?=^##\s)/m);
 
     blocks.forEach((block, index) => {
-      // 只处理以 #### 开头的区块
-      const nameMatch = block.match(/^####\s+(.*)/m);
+      // 只处理以 # 开头的区块
+      const nameMatch = block.match(/^##\s+(.*)/m);
       if (!nameMatch) return;
 
       // 全部使用基础英文冒号匹配
@@ -38,7 +38,7 @@ function parseVehiclesToData() {
 
       const name = nameMatch[1].trim();
 
-      // 【拦截器】：文档里有些 #### 是公司简介（比如“#### 弧光动力科技”）
+      // 【拦截器】：文档里有些 # 是公司简介（比如“# 弧光动力科技”）
       // 真正的载具肯定有“价值”或者“环境”，如果没有这两个字段，说明它是简介，跳过它。
       if (!priceTextMatch && !envMatch) return;
 
