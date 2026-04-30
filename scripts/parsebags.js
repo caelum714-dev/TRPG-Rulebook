@@ -2,15 +2,15 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+// 确保无论在哪里运行脚本，路径都能精准回退寻找
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 使用你代码里提供的最新路径
-const mdFile = path.resolve(__dirname, '../rules/item/vehicleDN.md'); 
-const outputFile = path.resolve(__dirname, '../.vitepress/theme/database/vehicle.js');
+const mdFile = path.resolve(__dirname, '../rules/equipment/armors/bag.md'); 
+const outputFile = path.resolve(__dirname, '../.vitepress/theme/database/bag.js');
 
-function parseVehiclesToData() {
-  let allVehicles = [];
+function parseMarkdownToData() {
+  let allEquipments = [];
 
   try {
     if (!fs.existsSync(mdFile)) {
@@ -20,62 +20,53 @@ function parseVehiclesToData() {
 
     const content = fs.readFileSync(mdFile, 'utf-8');
     
-    // 【核心修复】：像 bag 一样，直接用 #### 标题进行切分，无视任何 ::: details
+    // 使用多行模式 (^####) 进行切分，这比之前的切分更精准
     const blocks = content.split(/(?=^####\s)/m);
 
     blocks.forEach((block, index) => {
-      // 只处理以 #### 开头的区块
+      // 必须匹配标题，且允许标题后带任意空格
       const nameMatch = block.match(/^####\s+(.*)/m);
       if (!nameMatch) return;
 
-      // 全部使用基础英文冒号匹配
-      const companyMatch = block.match(/公司:\s*(.*)/);
-      const priceTextMatch = block.match(/价值:\s*(.*)/);
-      const envMatch = block.match(/环境:\s*(.*)/);
-      const powerMatch = block.match(/动力:\s*(.*)/);
-      const typeMatch = block.match(/种类:\s*(.*)/);
-      const seriesMatch = block.match(/系列:\s*(.*)/);
+      // 【核心修复】：使用 [：:\s]+ 完美兼容中文冒号、英文冒号和多余的空格
+      const tagsMatch = block.match(/(小型|中型|大型)/); 
+      const producerMatch = block.match(/生产商[：:\s]+(.*)/);
+      const priceTextMatch = block.match(/价值[：:\s]+.*?(\d+两(?:\d+钱)?)/);
+      const capacityMatch = block.match(/容量[：:\s]+(\d+)/);
 
-      const name = nameMatch[1].trim();
+      if (nameMatch) {
+        // 计算纯数字价格逻辑
+        let priceNum = 0;
+        if (priceTextMatch) {
+          const text = priceTextMatch[1];
+          const liang = text.match(/(\d+)两/) ? parseInt(text.match(/(\d+)两/)[1]) : 0;
+          const qian = text.match(/(\d+)钱/) ? parseInt(text.match(/(\d+)钱/)[1]) : 0;
+          priceNum = liang + (qian * 0.1); 
+        }
 
-      // 【拦截器】：文档里有些 #### 是公司简介（比如“#### 弧光动力科技”）
-      // 真正的载具肯定有“价值”或者“环境”，如果没有这两个字段，说明它是简介，跳过它。
-      if (!priceTextMatch && !envMatch) return;
-
-      // 提取价格数字 (兼容 "1500 两" 或 "12000+ 两")
-      let priceNum = 0;
-      let priceText = "议价";
-      if (priceTextMatch) {
-        priceText = priceTextMatch[1].trim();
-        const numMatch = priceText.match(/\d+/);
-        if (numMatch) priceNum = parseInt(numMatch[0]);
+        allEquipments.push({
+          id: `bag_${index}_${Date.now()}`,
+          name: nameMatch[1].trim(),
+          category: "背包",
+          tags: [
+            tagsMatch ? "规格: " + tagsMatch[1] : "", 
+            producerMatch ? producerMatch[1].trim() : ""
+          ].filter(Boolean),
+          capacity: capacityMatch ? parseInt(capacityMatch[1]) : 0,
+          priceText: priceTextMatch ? priceTextMatch[1] : "0两",
+          price: priceNum,
+          link: `/rules/equipment/armors/bag`
+        });
       }
-
-      allVehicles.push({
-        id: `vec_${index}_${Date.now()}`,
-        name: name,
-        category: "载具",
-        tags: [
-          envMatch ? `环境: ${envMatch[1].trim()}` : "",
-          powerMatch ? `动力: ${powerMatch[1].trim()}` : "",
-          typeMatch ? `种类: ${typeMatch[1].trim()}` : "",
-          seriesMatch ? `系列: ${seriesMatch[1].trim()}` : "",
-          companyMatch ? companyMatch[1].trim() : ""
-        ].filter(Boolean),
-        desc: "详细技术规格请查阅神都载具图鉴。", // 简化描述，防止报错
-        priceText: priceText,
-        price: priceNum,
-        link: `/rules/item/vehicleDN`
-      });
     });
 
-    const outputContent = `export const vehicles = ${JSON.stringify(allVehicles, null, 2)};`;
+    const outputContent = `export const bags = ${JSON.stringify(allEquipments, null, 2)};`;
     fs.writeFileSync(outputFile, outputContent, 'utf-8');
-    console.log(`✅ 成功从 vehicleDN.md 抓取了 ${allVehicles.length} 个载具！`);
+    console.log(`✅ 成功从 bag.md 抓取了 ${allEquipments.length} 个背包，已生成数据文件！`);
     
   } catch (error) {
     console.error("❌ 解析失败：", error.message);
   }
 }
 
-parseVehiclesToData();
+parseMarkdownToData();
