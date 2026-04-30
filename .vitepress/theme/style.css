@@ -53,7 +53,8 @@
 details h1, 
 details h2, 
 details h3, 
-details h4 {
+details h4，
+details h5,{
   /* 这里使用 em。如果折叠栏默认字号是 16px，1.2em 就是 19.2px */
   font-size: 1.2em; 
   /* 可选：调整标题前后的间距，让隐藏栏里的内容不至于太拥挤 */
@@ -74,5 +75,13 @@ details h2 {
 
 /* 针对折叠栏里的 ### (三级标题) */
 details h3 {
-  font-size: 1.1em; 
+  font-size: 1.15em; 
+}
+
+details h4 {
+  font-size: 1.00em; 
+}
+
+details h5 {
+  font-size: 0.85em; 
 }
