@@ -59,7 +59,7 @@ export default defineConfig({
             ]
           },
 
-          { text: '属性检定篇', link: '/rules/based-rule/2.attribute-check' },
+          { text: '属性检定篇', link: '/rules/1.based-rule/attributecheck' },
           {
             text: '战斗规则篇',
             collapsed: true, // 
