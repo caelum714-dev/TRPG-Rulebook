@@ -1,6 +1,6 @@
 export const bags = [
   {
-    "id": "bag_1_1777489715094",
+    "id": "bag_1_1777514115123",
     "name": "城市向导挎包 City Guide Urban 10",
     "category": "背包",
     "tags": [
@@ -12,7 +12,7 @@ export const bags = [
     "price": 2.5
   },
   {
-    "id": "bag_2_1777489715094",
+    "id": "bag_2_1777514115123",
     "name": "浪客行囊 Wandering Drawstring 15",
     "category": "背包",
     "tags": [
@@ -24,7 +24,7 @@ export const bags = [
     "price": 10
   },
   {
-    "id": "bag_3_1777489715094",
+    "id": "bag_3_1777514115123",
     "name": "寇驰真皮包 kroach shoulder bag 10",
     "category": "背包",
     "tags": [
@@ -36,7 +36,7 @@ export const bags = [
     "price": 0
   },
   {
-    "id": "bag_4_1777489715094",
+    "id": "bag_4_1777514115123",
     "name": "穿堂风轻征 Draft Lite 20",
     "category": "背包",
     "tags": [
@@ -48,7 +48,7 @@ export const bags = [
     "price": 15
   },
   {
-    "id": "bag_5_1777489715094",
+    "id": "bag_5_1777514115123",
     "name": "废墟远征 Ruins Expedition 25",
     "category": "背包",
     "tags": [
