@@ -21,11 +21,11 @@ function parseVehiclesToData() {
     const content = fs.readFileSync(mdFile, 'utf-8');
     
     // 【核心修复】：像 bag 一样，直接用 # 标题进行切分，无视任何 ::: details
-    const blocks = content.split(/(?=^##\s)/m);
+    const blocks = content.split(/(?=^###\s)/m);
 
     blocks.forEach((block, index) => {
       // 只处理以 # 开头的区块
-      const nameMatch = block.match(/^##\s+(.*)/m);
+      const nameMatch = block.match(/^###\s+(.*)/m);
       if (!nameMatch) return;
 
       // 全部使用基础英文冒号匹配

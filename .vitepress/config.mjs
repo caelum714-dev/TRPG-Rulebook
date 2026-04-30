@@ -50,7 +50,8 @@ export default defineConfig({
           { text: '本格属性', link: '/rules/based-rule/standard-attributes' },
           { text: '多维自我 (ALTER EGO, 被动能力)', link: '/rules/based-rule/alter-ego' },
           { text: '数值属性', link: '/rules/based-rule/numerical-attributes' },
-          { text: '理念等级', link: '/rules/based-rule/character-level' }
+          { text: '理念等级', link: '/rules/based-rule/character-level' },
+          { text: '属性检定', link: '/rules/based-rule/attributecheckDN' },
         ] 
       },
 

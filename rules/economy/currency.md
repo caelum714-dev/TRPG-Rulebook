@@ -17,7 +17,7 @@
 
 ::: details 夸德兰斯(Quadrans)
 
-## 夸德兰斯(Quadrans)
+### 夸德兰斯(Quadrans)
 
 绰号：小铜币，四分之一
 
@@ -27,7 +27,7 @@
 
 ::: details S(semis)
 
-## S(semis)
+### S(semis)
 
 绰号：半块，S
 
@@ -37,7 +37,7 @@
 
 ::: details 阿斯(as)
 
-## 阿斯(as)
+### 阿斯(as)
 
 常用货币
 
@@ -49,7 +49,7 @@
 
 ::: details 第纳里乌斯(Denarius)
 
-## 第纳里乌斯(Denarius)
+### 第纳里乌斯(Denarius)
 
 常用货币
 
@@ -63,7 +63,7 @@
 
 ::: details 奥雷乌斯(Aureus)
 
-## 奥雷乌斯(Aureus)
+### 奥雷乌斯(Aureus)
 
 常用货币
 
@@ -75,7 +75,7 @@
 
 ::: details 阿根图斯(Argenteus)
 
-## 阿根图斯
+### 阿根图斯
 
 常用货币
 
@@ -87,7 +87,7 @@
 
 ::: details 索利多斯(Solidus)
 
-## 索利多斯
+### 索利多斯
 
 绰号：琥珀币，新金币，大金币
 
@@ -107,7 +107,7 @@
 
 ::: details 货币
 
-## 货币
+### 货币
 
 货币换算：1两=10钱=100分
 
