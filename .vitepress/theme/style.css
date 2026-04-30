@@ -49,14 +49,16 @@
    修改折叠栏（隐藏栏）内部的标题字号排版
    ========================================= */
 
-details h1 {
-  /* 视觉上彻底隐藏标题，点开卡片直接显示纯净正文，完美保留锚点功能 */
-  display: block;
-  height: 0;
-  overflow: hidden;
-  opacity: 0;
-  margin: 0;
-  padding: 0;
+.vp-doc details h1 {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important; /* 强制干掉框架自带的巨大内边距 */
+  margin: 0 !important;  /* 强制干掉框架自带的巨大外边距 */
+  border: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
 }
 
 /* =========================================
@@ -65,14 +67,17 @@ details h1 {
 /* =========================================
    折叠栏内部标题：纯锚点隐身模式 (升级版)
    ========================================= */
-details h2 {
-  position: absolute; /* 核心：彻底脱离正常的文档流，不占任何空间 */
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0); /* 将可视区域裁剪到 0 */
-  white-space: nowrap;
-  border: 0;
+/* =========================================
+   折叠栏内部标题：纯锚点隐身模式 (终极强制版)
+   ========================================= */
+.vp-doc details h2 {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important; /* 强制干掉框架自带的巨大内边距 */
+  margin: 0 !important;  /* 强制干掉框架自带的巨大外边距 */
+  border: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
 }
