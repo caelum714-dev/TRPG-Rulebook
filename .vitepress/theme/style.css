@@ -46,20 +46,28 @@
 }
 
 /* =========================================
+   修改正文（非折叠栏）的 1# 标题视觉大小
+   ========================================= */
+.vp-doc h1 {
+  /* VitePress 默认的 h3 大概是 1.2em 到 1.25em 左右 */
+  font-size: 1.25em !important;  
+  font-weight: 600 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.4 !important;
+}
+
+/* =========================================
    修改折叠栏（隐藏栏）内部的标题字号排版
    ========================================= */
 
-/* =========================================
-   将折叠栏内部的 1# 标题视觉大小缩小到接近 3#
-   ========================================= */
 .vp-doc details h1 {
-  font-size: 1.15em !important;  /* 把它原本巨大的字号压小 */
-  font-weight: 600 !important;   /* 保持标题应有的粗细 */
-  margin-top: 1.2rem !important; /* 留出舒适的上方呼吸空间 */
+  font-size: 1.1em !important;   /* 推荐值：1.1em。只比普通正文大一点点 */
+  font-weight: 600 !important;   /* 保持一定的粗细度，区分正文 */
+  margin-top: 1.2rem !important; /* 拉开与上一段文字的距离 */
   margin-bottom: 0.5rem !important;
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-text-1);     /* 使用主题默认的一级文本颜色 */
 }
-
 .vp-doc details h2 {
   position: absolute !important;
   width: 1px !important;
@@ -72,15 +80,6 @@
   white-space: nowrap !important;
 }
 
-/* =========================================
-   折叠栏内部标题：纯锚点隐身模式
-   ========================================= */
-/* =========================================
-   折叠栏内部标题：纯锚点隐身模式 (升级版)
-   ========================================= */
-/* =========================================
-   折叠栏内部标题：纯锚点隐身模式 (终极强制版)
-   ========================================= */
 .vp-doc details h3 {
   position: absolute !important;
   width: 1px !important;
@@ -93,9 +92,6 @@
   white-space: nowrap !important;
 }
 
-/* =========================================
-   调整折叠栏内部的子分类标题（如：抽牌区）
-   ========================================= */
 .vp-doc details h4,
 .vp-doc details h3:not(.search-keywords) { /* 避开我们之前可能隐藏的搜索锚点 */
   font-size: 1.1em !important;   /* 推荐值：1.1em。只比普通正文大一点点 */
