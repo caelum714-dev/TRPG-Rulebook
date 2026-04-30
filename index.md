@@ -9,13 +9,13 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读规则
-      link: /rules/based-rule/index
+      link: /rules/1.based-rule/index
     - theme: alt
       text: 装备书
-      link: /rules/equipment/index
+      link: /rules/2.equipment/index
     - theme: alt
       text: 地理志
-      link: /rules/geograph/index
+      link: /rules/4.geograph/index
 
 
 ---
