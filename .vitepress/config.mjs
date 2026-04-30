@@ -44,19 +44,40 @@ export default defineConfig({
     // 左侧侧边栏
     sidebar: [
       {
-        text: '📖 角色创建',
+        text: '基础规则书',
         collapsed: false, // 装备大类默认展开
         items: [
-          { text: '本格属性', link: '/rules/based-rule/standard-attributes' },
-          { text: '多维自我 (ALTER EGO, 被动能力)', link: '/rules/based-rule/alter-ego' },
-          { text: '数值属性', link: '/rules/based-rule/numerical-attributes' },
-          { text: '理念等级', link: '/rules/based-rule/character-level' },
-          { text: '属性检定', link: '/rules/based-rule/attributecheckDN' },
+          {
+            text: '基础属性篇',
+            collapsed: true, // 基础属性默认折叠
+            items: [
+              { text: '导言', link: '/rules/based-rule/1.character-attribute/'},
+              { text: '本格属性', link: '/rules/based-rule/1.character-attribute/standard-attributes' },
+              { text: '多维自我 (ALTER EGO, 被动能力)', link: '/rules/based-rule/1.character-attribute/alter-ego' },
+              { text: '数值属性', link: '/rules/based-rule/1.character-attribute/numerical-attributes' },
+              { text: '理念等级', link: '/rules/based-rule/1.character-attribute/character-level' },
+            ]
+          },
+
+          { text: '属性检定篇', link: '/rules/based-rule/2.attribute-check' },
+          {
+            text: '战斗规则篇',
+            collapsed: true, // 
+            items: [
+              { text: '导言', link: '/rules/1.based-rule/3.battle-rule/'},
+              { text: '战斗流程', link: '/rules/based-rule/3.battle-rule/1.battle process'},
+              { text: '基础回合规则', link: '/rules/based-rule/3.battle-rule/2.turn' },
+              { text: '进攻手段', link: 'rules/based-rule/3.battle-rule/3.attack' },
+              { text: '防御手段', link: '/rules/based-rule/3.battle-rule/4.defend' },
+              { text: '特殊行动', link: '/rules/based-rule/3.battle-rule/5.special' },
+              { text: '战斗距离', link: '/rules/based-rule/3.battle-rule/6.distence' },
+            ]
+          },
         ] 
       },
 
       {   
-        text: '📦 装备书',
+        text: ' 装备书',
         collapsed: false, 
         items: [
           { text: '装备使用须知', link: '/rules/equipment/' },
@@ -86,7 +107,7 @@ export default defineConfig({
       },
       
       {
-        text: '🗺️ 地理志',
+        text: ' 地理志',
         collapsed: false, 
         items: [
           { text: '地理志总览', link: '/rules/geography/' },

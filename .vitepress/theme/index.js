@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 import { watch, onMounted } from 'vue'
 import { useRoute } from 'vitepress'
 import './style.css' 
+import './quotes.css' // 引入你的名言专属样式
 
 export default {
   extends: DefaultTheme,

@@ -1,0 +1,92 @@
+/* 引言组件的样式 */
+
+/* 1
+.search-keywords {
+  display: block;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* 沉浸式序言排版 */
+.lore-prologue {
+  position: relative;
+  margin: 2rem 0;
+  padding: 1.5rem 2rem;
+  background-color: var(--vp-c-bg-soft); /* 使用 VitePress 自带的柔和背景色 */
+  border-left: 4px solid #c8a063; /* 左侧暗金色装饰线 */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* 引言正文：使用倾斜的衬线体（宋体） */
+.lore-prologue .quote-text {
+  position: relative;
+  margin: 0;
+  font-size: 1.1rem;
+  font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  font-style: italic;
+  color: var(--vp-c-text-1);
+  line-height: 1.8;
+}
+
+/* 署名区：靠右对齐，使用无衬线体 */
+.lore-prologue .quote-author {
+  margin: 1rem 0 0 0;
+  text-align: right;
+  font-size: 0.95rem;
+  color: var(--vp-c-text-2);
+}
+
+/* 署名高亮：暗金色 */
+.lore-prologue .gold-name {
+  color: #c8a063; /* 质感暗金 */
+  font-weight: 600;
+  letter-spacing: 1px; /* 稍微拉开字间距增加高级感 */
+}
+
+
+/* 2. 战斗篇专属引言样式 */
+.combat-quote {
+  /* 将左侧边框改为危险的暗红色 */
+  border-left: 4px solid #b91c1c !important; 
+  /* 背景使用线性渐变与径向渐变叠加，模拟右下角有血迹晕染的效果 */
+  background: 
+    radial-gradient(circle at 100% 100%, rgba(185, 28, 28, 0.15) 0%, transparent 40%),
+    rgba(243, 244, 246, 0.6) !important; 
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+/* 让“别死！”这句台词带上一点点红色的晕影（视觉残留感） */
+.combat-quote .quote-text {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #1f2937;
+  text-shadow: 1px 1px 3px rgba(185, 28, 28, 0.2);
+}
+
+/* 署名颜色调暗，带点冷酷感 */
+.combat-quote .quote-author {
+  margin: 1rem 0 0 0;
+  text-align: right;
+  font-size: 0.95rem;
+  color: #7f1d1d;
+}
+
+/* 如果你的网站有暗黑模式，记得补充暗色调下的适配 */
+.dark .combat-quote {
+  background: 
+    radial-gradient(circle at 100% 100%, rgba(220, 38, 38, 0.2) 0%, transparent 40%),
+    rgba(30, 30, 30, 0.8) !important;
+  border-left-color: #ef4444 !important;
+}
+.dark .combat-quote .quote-text {
+  color: #f3f4f6;
+}
+.dark .combat-quote .quote-author {
+  color: #f87171;
+}
