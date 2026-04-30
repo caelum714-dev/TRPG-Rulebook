@@ -100,7 +100,16 @@ export default defineConfig({
         items: [
           { text: '载具', link: '/rules/item/vehicleDN' }
         ]
+      },
+
+      {
+        text: '经济系统',
+        collapsed: false,
+        items: [
+          { text: '货币体系', link: '/rules/economy/currency' },
+        ]
       }
+
     ],
 
     socialLinks: [
