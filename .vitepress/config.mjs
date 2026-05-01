@@ -80,12 +80,11 @@ export default defineConfig({
         text: ' 装备书',
         collapsed: false, 
         items: [
-          { text: '装备使用须知', link: '/rules/equipment/' },
           {
             text: '🗡️ 武器书 (按类型分类)',
             collapsed: true, // 
             items: [
-              { text: '导言', link: '/rules/2.equipment/weapons/'},
+              { text: '装备使用须知', link: '/rules/2.equipment/weapons/'},
               { text: '自赋能兵械', link: '/rules/2.equipment/weapons/weaponsZF'},
               { text: '动能兵械', link: '/rules/2.equipment/weapons/weaponsDN' },
               { text: '自导器', link: '/rules/2.equipment/weapons/daoqiZD' },
