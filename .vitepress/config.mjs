@@ -37,7 +37,7 @@ export default defineConfig({
     
     nav: [
       { text: '首页', link: '/' },
-      { text: '规则书', link: '/rules/based-rule/index' },
+      { text: '规则书', link: '/rules/1.based-rule/index' },
       { text: '🛒 黑市终端', link: '/shop' }
     ],
 
