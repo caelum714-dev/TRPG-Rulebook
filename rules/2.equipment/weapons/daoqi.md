@@ -4,6 +4,8 @@
 
 :::: details 🏢 西川霊術重工株式会社（Nishikawa Reijutsu Jūkō）
 
+## 西川霊術重工株式会社
+
 ::: details ◢ III级·鬼方9式“云外镜”铳型导器
 
 ### 鬼方9式“云外镜”铳型导器
@@ -160,6 +162,8 @@
 
 :::: details 🏢 天工峡集团
 
+## 天工峡集团
+
 ::: details ◢ ？级·“行禅”杖型导器
 
 ### “行禅”杖型导器
@@ -235,6 +239,8 @@
 ::::
 
 :::: details 🏢 万神都国际＆梵天武库Armement Céleste
+
+## 万神都国际＆梵天武库
 
 ::: details ◢ ？级·R6谐秩 铳型导器
 <span style="display: none;">R6谐秩 铳型导器</span>
