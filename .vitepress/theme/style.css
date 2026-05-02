@@ -1,3 +1,12 @@
+/* 强行压制主页 Hero 区域 text（副标题）的字号 */
+.VPHero .text {
+  font-size: 24px !important; /* 控制文字大小，你可以把 24px 改成 20px 会更小 */
+  line-height: 1.5 !important; /* 控制行间距，防止换行后文字挤在一起 */
+  font-weight: 500 !important; /* 控制字体粗细，500是中等偏粗，想更细可以改为 400 */
+  margin-top: 12px !important; /* 控制它和上方主标题的间距 */
+  color: #555 !important; /* 稍微调暗一点文字颜色，让它更像系统提示音，不抢主标题风头 */
+}
+
 /* =========================================
    修改正文（非折叠栏）的 1# 标题视觉大小
    ========================================= */
@@ -52,4 +61,64 @@
   margin-top: 1.2rem !important; /* 拉开与上一段文字的距离 */
   margin-bottom: 0.5rem !important;
   color: var(--vp-c-text-1);     /* 使用主题默认的一级文本颜色 */
+}
+
+/* 针对主页 Hero 区域的扫描线容器 */
+.VPHero {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 创建伪元素实现扫描线动画 */
+.VPHero::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* 扫描线纹理：通过极细的透明与黑色/战术红交替实现 */
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.1) 50%
+  ), 
+  linear-gradient(
+    90deg, 
+    rgba(255, 0, 0, 0.03), 
+    rgba(0, 255, 0, 0.01), 
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 3px 100%; /* 线条间距 */
+  z-index: 10;
+  pointer-events: none; /* 确保不影响按钮点击 */
+}
+
+/* 滚动的亮线效果：模拟终端扫描感 */
+.VPHero::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(153, 27, 27, 0.05); /* 使用你的“战术红” #991b1b 的半透明版 */
+  opacity: 0;
+  z-index: 11;
+  pointer-events: none;
+  animation: flicker 0.1s infinite, scanline 8s linear infinite;
+}
+
+/* 扫描线移动动画 */
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* 模拟屏幕轻微闪烁感 */
+@keyframes flicker {
+  0% { opacity: 0.05; }
+  50% { opacity: 0.02; }
+  100% { opacity: 0.06; }
 }

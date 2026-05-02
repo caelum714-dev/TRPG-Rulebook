@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: "蜃都群屿规则书",
-  description: "我受够了word文档！",
+  description: "检测到非法接入... 正在同步第纳里乌斯汇率...",
   themeConfig: {
     search: {
       provider: 'local',

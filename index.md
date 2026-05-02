@@ -3,10 +3,12 @@
 layout: home
 
 hero:
-  name: "蜃都群屿规则书"
-  text: "我受够了word文档！"
-  tagline: 欢迎来到蜃都...
-  actions:
+   name: "蜃都群屿规则书"
+   text: "档案编号：SD-0001"  # 换成极短的编号，就不会显得拥挤
+   tagline: "检测到非法接入... 正在同步第纳里乌斯汇率... <br>欢迎来到泛蜃都..." # 长文本放在这里，<br> 用来换行
+  # ... 保留你原来的按钮配置 ...
+
+   actions:
     - theme: brand
       text: 开始阅读规则
       link: /rules/1.based-rule/index
