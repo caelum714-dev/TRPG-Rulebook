@@ -55,14 +55,22 @@ function parseVehiclesToData() {
         id: `vec_${index}_${Date.now()}`,
         name: name,
         category: "载具",
+
+        company: companyMatch ? companyMatch[1].trim() : "",
+        environment: envMatch ? envMatch[1].trim() : "",
+        power: powerMatch ? powerMatch[1].trim() : "",
+        vehicleType: typeMatch ? typeMatch[1].trim() : "",
+        series: seriesMatch ? seriesMatch[1].trim() : "",
+
         tags: [
+          companyMatch ? `公司: ${companyMatch[1].trim()}` : "",
           envMatch ? `环境: ${envMatch[1].trim()}` : "",
           powerMatch ? `动力: ${powerMatch[1].trim()}` : "",
-          typeMatch ? `种类: ${typeMatch[1].trim()}` : "",
-          seriesMatch ? `系列: ${seriesMatch[1].trim()}` : "",
-          companyMatch ? companyMatch[1].trim() : ""
+          typeMatch ? `载具类型: ${typeMatch[1].trim()}` : "",
+          seriesMatch ? `系列: ${seriesMatch[1].trim()}` : ""
         ].filter(Boolean),
-        desc: "详细技术规格请查阅蜃都载具图鉴。", // 简化描述，防止报错
+
+        desc: "详细技术规格请查阅蜃都载具图鉴。",
         priceText: priceText,
         price: priceNum,
         link: `/rules/item/vehicleDN`

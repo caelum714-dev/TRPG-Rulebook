@@ -5,7 +5,7 @@ title: 交易终端
 
 <script setup>
 import { ref, computed } from 'vue'
-import ShopTerminal from './.vitepress/theme/ShopTerminal.vue'
+import ShopTerminal from './.vitepress/theme/components/ShopTerminal.vue'
 
 // 1. 引入扁平化数据库
 // 这里使用了 as 关键字重命名，方便区分不同类型的数据

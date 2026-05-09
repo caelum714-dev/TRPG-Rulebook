@@ -48,10 +48,17 @@ function parseMarkdownToData() {
           id: `bag_${index}_${Date.now()}`,
           name: nameMatch[1].trim(),
           category: "背包",
+
+          // 显式字段
+          size: tagsMatch ? tagsMatch[1] : "",
+          producer: producerMatch ? producerMatch[1].trim() : "",
+
+          // 给 ShopTerminal 分组筛选用
           tags: [
-            tagsMatch ? "规格: " + tagsMatch[1] : "", 
-            producerMatch ? producerMatch[1].trim() : ""
+            tagsMatch ? `规格: ${tagsMatch[1]}` : "",
+            producerMatch ? `生产商: ${producerMatch[1].trim()}` : ""
           ].filter(Boolean),
+
           capacity: capacityMatch ? parseInt(capacityMatch[1]) : 0,
           priceText: priceTextMatch ? priceTextMatch[1] : "0两",
           price: priceNum,

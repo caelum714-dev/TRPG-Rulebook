@@ -43,7 +43,7 @@ function parseWeaponsToData() {
 
         // 提取基础字段 (容错版，兼容有无加粗**)
         const categoryMatch = block.match(/\*?\*?【分类】\*?\*?\s*[:：]\s*(.*)/);
-        const rangeMatch = block.match(/\*?\*?【射程】\*?\*?\s*[:：]\s*(.*)/); // ✨ 新增：射程提取
+        const rangeMatch = block.match(/\*?\*?【射程】\*?\*?\s*[:：]\s*(.*)/); // 
         const sizeMatch = block.match(/\*?\*?【大小】\*?\*?\s*[:：]\s*(.*)/);
         const companyMatch = block.match(/\*?\*?【公司】\*?\*?\s*[:：]\s*(.*)/);
         const valueMatchStr = block.match(/\*?\*?【价值】\*?\*?\s*[:：]\s*(.*)/);
@@ -115,10 +115,26 @@ function parseWeaponsToData() {
         // ==========================================
         let rawDamage = "";
         let damageType = "";
+        let armorPierceLevel = "";
+
         if (damageMatch) {
-          rawDamage = damageMatch[1].trim(); 
-          let cleanDamage = rawDamage.replace(/\s*(?:\([^)]*\)|（[^）]*）)\s*$/, '').trim();
-          damageType = cleanDamage.length >= 2 ? cleanDamage.slice(-2) : cleanDamage; 
+          rawDamage = damageMatch[1].trim();
+
+          let cleanDamage = rawDamage
+            .replace(/\s*(?:\([^)]*\)|（[^）]*）)\s*$/, "")
+            .trim();
+
+          // 提取穿甲等级，例如 "1d12, 2级穿刺" -> "2"
+          const armorPierceMatch = cleanDamage.match(/[，,]\s*(\d+)级/);
+          if (armorPierceMatch) {
+            armorPierceLevel = Number(armorPierceMatch[1])
+          }
+
+          // 提取伤害类型，例如 "1d12, 2级穿刺" -> "穿刺"
+          const typeMatch = cleanDamage.match(/级(.+)$/);
+          if (typeMatch) {
+            damageType = typeMatch[1].trim();
+          }
         }
 
         // ==========================================
@@ -144,10 +160,11 @@ function parseWeaponsToData() {
           socialCredit: socialCreditMatch ? socialCreditMatch[1].trim() : "",
           bonusSources: cleanBonusSources,        // ✨ 数组格式的纯净加成来源 (例: ["体术", "灵巧"])
           rawDamage: rawDamage,     
-          damageType: damageType,   
+          damageType: damageType,
+          armorPierceLevel: armorPierceLevel,   
           size: sizeNum,
           isHeavy: isHeavy,         
-          isTwoHanded: isTwoHanded,               // ✨ 前端可据此渲染 👐 双持 标签
+          isTwoHanded: isTwoHanded,               
           rarityMajor: rarityMajor, 
           rarityMinor: rarityMinor, 
           price: price,             

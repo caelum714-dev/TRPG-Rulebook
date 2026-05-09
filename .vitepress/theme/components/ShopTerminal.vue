@@ -104,10 +104,10 @@ const normalizedGoods = computed(() => {
     if (_item.rarityMajor) t.push(`价值: ${_item.rarityMajor}`)
     if (_item.damageType) t.push(`伤害: ${_item.damageType}`)
     if (_item.range) t.push(`射程: ${_item.range}`)
-    if (_item.isHeavy) t.push('负重')
-    if (_item.isTwoHanded) t.push('双持')
-    if (_item.hasTactics) t.push('战术')
-    if (_item.hasAccessories) t.push('配件位')
+    if (_item.isHeavy) t.push('特性: 负重')
+    if (_item.isTwoHanded) t.push('特性: 双持')
+    if (_item.hasTactics) t.push('特性: 战术')
+    if (_item.hasAccessories) t.push('特性: 配件位')
     
     if (_item.bonusSources && _item.bonusSources.length > 0) {
       _item.bonusSources.forEach(bonus => {
@@ -116,7 +116,7 @@ const normalizedGoods = computed(() => {
     }
 
 
-    _item.tags = t
+    _item.tags = [...new Set(t)] // 去重
     return _item
   })
 })
@@ -133,27 +133,32 @@ const activeFilters = ref({}) // 格式: { "价值": ["工业级"], "特性": ["
 const clearFilters = () => { activeFilters.value = {} }
 
 // 监听 goods 变化，重置分类
-watch(() => props.goods, (newVal) => {
+watch(() => props.goods, () => {
   activeCategory.value = categories.value.length > 0 ? categories.value[0] : ''
   clearFilters()
 }, { immediate: true })
 
 // 核心：生成当前分类下的可选标签组
+const getTagLabel = (tag) => {
+  return tag.includes(':') ? tag.split(':')[0].trim() : '特性'
+}
+
+const getTagValue = (tag) => {
+  return tag.includes(':') ? tag.split(':').slice(1).join(':').trim() : tag
+}
+
 const filterOptions = computed(() => {
   const groups = {}
   const currentCategoryItems = normalizedGoods.value.filter(i => i.category === activeCategory.value)
-  
+
   currentCategoryItems.forEach(item => {
     item.tags.forEach(tag => {
-      let label = "特性", value = tag
-      if (tag.includes(':')) {
-        [label, value] = tag.split(':').map(s => s.trim())
-      }
+      const label = getTagLabel(tag)
       if (!groups[label]) groups[label] = new Set()
-      groups[label].add(tag) // 存储完整标签
-    });
+      groups[label].add(tag)
+    })
   })
-  
+
   return Object.keys(groups).map(label => ({
     label,
     options: Array.from(groups[label])
@@ -168,10 +173,14 @@ const isFilterActive = (label, fullTag) => {
 }
 
 const toggleFilter = (label, fullTag) => {
-  if (!activeFilters.value[label]) activeFilters.value[label] = []
-  const idx = activeFilters.value[label].indexOf(fullTag)
-  if (idx > -1) activeFilters.value[label].splice(idx, 1)
-  else activeFilters.value[label].push(fullTag)
+  const current = activeFilters.value[label] || []
+
+  activeFilters.value = {
+    ...activeFilters.value,
+    [label]: current.includes(fullTag)
+      ? current.filter(t => t !== fullTag)
+      : [...current, fullTag]
+  }
 }
 
 // 4. 最终过滤输出（修复点：如果没有选筛选，则显示全部）
@@ -191,7 +200,7 @@ const filteredItems = computed(() => {
 })
 
 // 5. 辅助函数
-const formatTagName = (tag) => tag.includes(':') ? tag.split(':')[1].trim() : tag
+const formatTagName = getTagValue
 const formatCurrency = (n) => n ? `${Math.floor(n)}两` : '议价'
 
 // 6. 购物车动作
@@ -202,6 +211,8 @@ const addToCart = (item) => {
 }
 const removeFromCart = (item) => {
   const exist = globalCart.value.find(i => i.id === item.id)
+  if (!exist) return
+
   if (exist.quantity > 1) exist.quantity--
   else globalCart.value = globalCart.value.filter(i => i.id !== item.id)
 }
