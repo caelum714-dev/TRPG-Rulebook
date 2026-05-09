@@ -4,83 +4,50 @@
     <div class="catalog-section">
       <div class="section-header">
         <h3 class="section-title">📦 {{ shopTitle }}</h3>
-        <button v-if="hasActiveFilters" class="clear-btn" @click="clearFilters">× 清空所有筛选</button>
+        <button v-if="hasActiveFilters" class="clear-btn" @click="clearFilters">重置所有筛选</button>
       </div>
 
       <div class="category-tabs" v-if="categories.length > 0">
         <button 
-          v-for="cat in categories" 
-          :key="cat"
-          class="cat-btn"
-          :class="{ active: activeCategory === cat }"
+          v-for="cat in categories" :key="cat"
+          class="cat-btn" :class="{ active: activeCategory === cat }"
           @click="activeCategory = cat"
         >
-          [ {{ cat }} ]
+          {{ cat }}
         </button>
       </div>
       
       <div class="filter-panel" v-if="hasAnyFilterOptions">
-        
-        <div class="filter-row" v-if="filterOptions.brands.length > 0">
-          <div class="filter-label">【公司】</div>
-          <div class="filter-options">
-            <button v-for="b in filterOptions.brands" :key="b"
-                    class="tag-btn" :class="{ active: filters.brand.includes(b) }"
-                    @click="toggleFilter('brand', b)">
-              {{ b }}
-            </button>
-          </div>
-        </div>
-
-        <div class="filter-row" v-for="group in filterOptions.dynamic" :key="group.label">
+        <div class="filter-row" v-for="group in filterOptions" :key="group.label">
           <div class="filter-label">【{{ group.label }}】</div>
           <div class="filter-options">
             <button v-for="opt in group.options" :key="opt"
-                    class="tag-btn" :class="{ active: filters.dynamic[group.label] && filters.dynamic[group.label].includes(opt) }"
-                    @click="toggleFilter('dynamic', opt, group.label)">
-              {{ opt.split(':')[1].trim() }}
+                    class="tag-btn" :class="{ active: isFilterActive(group.label, opt) }"
+                    @click="toggleFilter(group.label, opt)">
+              {{ formatTagName(opt) }}
             </button>
           </div>
         </div>
-
-        <div class="filter-row" v-if="filterOptions.capacities.length > 0">
-          <div class="filter-label">【容量】</div>
-          <div class="filter-options">
-            <button v-for="c in filterOptions.capacities" :key="c"
-                    class="tag-btn" :class="{ active: filters.capacity.includes(c) }"
-                    @click="toggleFilter('capacity', c)">
-              {{ c }} 空间
-            </button>
-          </div>
-        </div>
-
       </div>
 
       <div class="product-list">
         <div v-for="item in filteredItems" :key="item.id" class="product-card">
           <div class="product-info">
             <div class="p-name">{{ item.name }}</div>
-            <div class="p-desc">{{ item.desc }}</div>
+            <div class="p-desc">{{ item.rawValue || item.desc }}</div>
             <div class="p-tags">
-              <span v-if="item.category" class="p-tag category-tag">{{ item.category }}</span>
-              <span v-if="item.capacity" class="p-tag cap-tag">📦 容量: {{ item.capacity }}</span>
-              
-              <span v-for="t in item.tags" :key="t" class="p-tag tag-group">
-                <template v-if="t && t.includes(':')">
-                  <span class="tag-prefix">{{ t.split(':')[0] }}</span>
-                  <span class="tag-value">{{ t.split(':')[1] }}</span>
-                </template>
-                <template v-else>{{ t }}</template>
-              </span>
+              <span v-if="item.capacity" class="p-tag cap-tag">占用: {{ item.capacity }}</span>
+              <span v-for="t in item.tags" :key="t" class="p-tag">{{ t }}</span>
             </div>
           </div>
           <div class="product-action">
-            <div class="p-price">{{ item.priceText }}</div>
-            <button class="add-btn" @click="addToCart(item)">+ 拿取</button>
+            <div class="p-price">{{ formatCurrency(item.price) }}</div>
+            <button class="add-btn" @click="addToCart(item)">拿取</button>
           </div>
         </div>
+        
         <div v-if="filteredItems.length === 0" class="empty-state">
-          无匹配物资，请尝试放宽筛选条件，或切换至其他物资分类。
+          该分类下暂无物资，或筛选条件过严。
         </div>
       </div>
     </div>
@@ -88,274 +55,193 @@
     <div class="cart-section">
       <h3 class="section-title">📝 携行清单</h3>
       <div class="cart-items">
-        <div v-if="cart.length === 0" class="empty-cart">尚未选择任何物资。</div>
-        <div v-for="(cartItem, index) in cart" :key="index" class="cart-item">
+        <div v-if="globalCart.length === 0" class="empty-cart">清单为空</div>
+        <div v-for="cartItem in globalCart" :key="cartItem.id" class="cart-item">
           <div class="c-info">
-            <div class="c-name">{{ cartItem.name }}</div>
-            <div v-if="cartItem.capacity" class="c-cap">+{{ cartItem.capacity }} 容量</div>
+            <div class="c-name">{{ cartItem.name }} <span v-if="cartItem.quantity > 1">×{{ cartItem.quantity }}</span></div>
+            <div class="c-price">{{ formatCurrency(cartItem.price * cartItem.quantity) }}</div>
           </div>
-          <div class="c-right">
-            <span class="c-price">{{ cartItem.priceText }}</span>
-            <button class="remove-btn" @click="removeFromCart(index)">×</button>
+          <div class="c-controls">
+            <button @click="removeFromCart(cartItem)">-</button>
+            <button @click="addToCart(cartItem)">+</button>
           </div>
         </div>
       </div>
-      <div class="cart-summary">
-        <div class="summary-row">
-          <span>预期总容量提升：</span>
-          <span class="highlight-text">{{ totalCapacity }}</span>
-        </div>
-        <div class="summary-row total-cost">
-          <span>总计申领预算：</span>
+      <div class="cart-summary" v-if="globalCart.length > 0">
+        <div class="total-row">
+          <span>预计支出：</span>
           <span class="total-price">{{ formatCurrency(totalPrice) }}</span>
         </div>
+        <button class="clear-cart-btn" @click="clearCart">清空清单</button>
       </div>
     </div>
 
   </div>
 </template>
 
-<script setup>
+<script>
 import { ref, computed, watch } from 'vue'
+// 全局购物车状态（跨组件共享）
+const globalCart = ref([])
+</script>
 
+<script setup>
 const props = defineProps({
   goods: { type: Array, required: true, default: () => [] },
   shopTitle: { type: String, default: "物资调度终端" }
 })
 
-// ==========================================
-// 【核心新增逻辑】：二级分类导航
-// ==========================================
+// 1. 数据标准化适配器
+const normalizedGoods = computed(() => {
+  return props.goods.map(item => {
+    const _item = { ...item }
+    // 转换武器 size 到 capacity
+    if (_item.size !== undefined) _item.capacity = _item.size
+    
+    // 组装万能标签数组
+    let t = _item.tags ? [..._item.tags] : []
+    if (_item.company) t.push(`公司: ${_item.company}`)
+    if (_item.rarityMajor) t.push(`价值: ${_item.rarityMajor}`)
+    if (_item.damageType) t.push(`伤害: ${_item.damageType}`)
+    if (_item.range) t.push(`射程: ${_item.range}`)
+    if (_item.isHeavy) t.push('负重')
+    if (_item.isTwoHanded) t.push('双持')
+    if (_item.hasTactics) t.push('战术')
+    if (_item.hasAccessories) t.push('配件位')
+    
+    if (_item.bonusSources && _item.bonusSources.length > 0) {
+      _item.bonusSources.forEach(bonus => {
+         t.push(`加成: ${bonus}`) 
+      })
+    }
 
-// 1. 从所有传入数据中提取出有哪些二级类别（比如：'背包', '载具'）
-const categories = computed(() => {
-  const cats = new Set(props.goods.map(item => item.category).filter(Boolean))
-  return Array.from(cats)
+
+    _item.tags = t
+    return _item
+  })
 })
 
-// 2. 当前激活的二级分类
+// 2. 分类逻辑
+const categories = computed(() => {
+  return Array.from(new Set(normalizedGoods.value.map(i => i.category).filter(Boolean)))
+})
 const activeCategory = ref('')
 
-// 3. 当前分类下的所有商品
-const categoryGoods = computed(() => {
-  if (!activeCategory.value) return props.goods
-  return props.goods.filter(item => item.category === activeCategory.value)
-})
+// 3. 筛选逻辑（极简重构）
+const activeFilters = ref({}) // 格式: { "价值": ["工业级"], "特性": ["⚖️ 负重"] }
 
-// === 进阶版多维度筛选逻辑 ===
-const filters = ref({
-  brand: [],
-  capacity: [],
-  dynamic: {}
-})
+const clearFilters = () => { activeFilters.value = {} }
 
-const hasActiveFilters = computed(() => {
-  if (filters.value.brand.length > 0) return true
-  if (filters.value.capacity.length > 0) return true
-  for (const key in filters.value.dynamic) {
-    if (filters.value.dynamic[key].length > 0) return true
-  }
-  return false
-})
-
-const clearFilters = () => {
-  filters.value = { brand: [], capacity: [], dynamic: {} }
-}
-
-// 监听外层大频道切换（比如从后勤切到武装），重置二级标签和筛选
-watch(() => props.goods, () => {
-  if (categories.value.length > 0) {
-    activeCategory.value = categories.value[0]
-  } else {
-    activeCategory.value = ''
-  }
+// 监听 goods 变化，重置分类
+watch(() => props.goods, (newVal) => {
+  activeCategory.value = categories.value.length > 0 ? categories.value[0] : ''
   clearFilters()
 }, { immediate: true })
 
-// 监听内层二级标签切换（比如从背包切到载具），清空筛选器，防止把载具给过滤没了
-watch(activeCategory, () => {
-  clearFilters()
-})
-
-// 自动提取选项 (注意：这里改成了遍历 categoryGoods，确保筛选面板只显示当前分类的选项)
+// 核心：生成当前分类下的可选标签组
 const filterOptions = computed(() => {
-  const groups = { brand: new Set(), capacity: new Set() }
-  const dynamicPrefixes = {} 
-
-  categoryGoods.value.forEach(item => {
-    if (item.capacity) groups.capacity.add(item.capacity)
-    if (item.tags) {
-      item.tags.forEach(t => {
-        if (t.includes(':')) {
-          const prefix = t.split(':')[0].trim()
-          if (!dynamicPrefixes[prefix]) dynamicPrefixes[prefix] = new Set()
-          dynamicPrefixes[prefix].add(t)
-        } else {
-          groups.brand.add(t)
-        }
-      })
-    }
-  })
-
-  return {
-    brands: Array.from(groups.brand),
-    capacities: Array.from(groups.capacity).sort((a, b) => a - b),
-    dynamic: Object.keys(dynamicPrefixes).map(key => ({
-      label: key,
-      options: Array.from(dynamicPrefixes[key])
-    }))
-  }
-})
-
-// 判断当前类别下是否有任何筛选选项，如果没有就隐藏整个筛选面板
-const hasAnyFilterOptions = computed(() => {
-  return filterOptions.value.brands.length > 0 || 
-         filterOptions.value.capacities.length > 0 || 
-         filterOptions.value.dynamic.length > 0
-})
-
-const toggleFilter = (type, value, dynamicGroupLabel = null) => {
-  if (type === 'brand' || type === 'capacity') {
-    const targetArray = filters.value[type]
-    const idx = targetArray.indexOf(value)
-    if (idx > -1) targetArray.splice(idx, 1)
-    else targetArray.push(value)
-  } else if (type === 'dynamic') {
-    if (!filters.value.dynamic[dynamicGroupLabel]) {
-      filters.value.dynamic[dynamicGroupLabel] = []
-    }
-    const targetArray = filters.value.dynamic[dynamicGroupLabel]
-    const idx = targetArray.indexOf(value)
-    if (idx > -1) targetArray.splice(idx, 1)
-    else targetArray.push(value)
-  }
-}
-
-// 基于筛选条件进行过滤 (注意：这里在 categoryGoods 基础上继续过滤)
-const filteredItems = computed(() => {
-  return categoryGoods.value.filter(item => {
-    const matchBrand = filters.value.brand.length === 0 || filters.value.brand.some(b => item.tags && item.tags.includes(b))
-    const matchCapacity = filters.value.capacity.length === 0 || filters.value.capacity.includes(item.capacity)
-    let matchDynamic = true
-    for (const prefix in filters.value.dynamic) {
-      const selectedOptions = filters.value.dynamic[prefix]
-      if (selectedOptions && selectedOptions.length > 0) {
-        const hasMatch = selectedOptions.some(opt => item.tags && item.tags.includes(opt))
-        if (!hasMatch) {
-          matchDynamic = false
-          break
-        }
+  const groups = {}
+  const currentCategoryItems = normalizedGoods.value.filter(i => i.category === activeCategory.value)
+  
+  currentCategoryItems.forEach(item => {
+    item.tags.forEach(tag => {
+      let label = "特性", value = tag
+      if (tag.includes(':')) {
+        [label, value] = tag.split(':').map(s => s.trim())
       }
-    }
-    return matchBrand && matchCapacity && matchDynamic
+      if (!groups[label]) groups[label] = new Set()
+      groups[label].add(tag) // 存储完整标签
+    });
   })
+  
+  return Object.keys(groups).map(label => ({
+    label,
+    options: Array.from(groups[label])
+  }))
 })
 
-// === 购物车逻辑 (保持不变) ===
-const cart = ref([])
-const addToCart = (item) => cart.value.push({ ...item })
-const removeFromCart = (index) => cart.value.splice(index, 1)
-const totalCapacity = computed(() => cart.value.reduce((sum, item) => sum + (item.capacity || 0), 0))
-const totalPrice = computed(() => cart.value.reduce((sum, item) => sum + (item.price || 0), 0))
-const formatCurrency = (num) => {
-  if (num === 0) return "0两"
-  const liang = Math.floor(num)
-  const qian = Math.round((num - liang) * 10)
-  if (qian === 0) return `${liang}两`
-  if (liang === 0) return `${qian}钱`
-  return `${liang}两${qian}钱`
+const hasAnyFilterOptions = computed(() => filterOptions.value.length > 0)
+const hasActiveFilters = computed(() => Object.values(activeFilters.value).some(v => v.length > 0))
+
+const isFilterActive = (label, fullTag) => {
+  return activeFilters.value[label]?.includes(fullTag) || false
 }
+
+const toggleFilter = (label, fullTag) => {
+  if (!activeFilters.value[label]) activeFilters.value[label] = []
+  const idx = activeFilters.value[label].indexOf(fullTag)
+  if (idx > -1) activeFilters.value[label].splice(idx, 1)
+  else activeFilters.value[label].push(fullTag)
+}
+
+// 4. 最终过滤输出（修复点：如果没有选筛选，则显示全部）
+const filteredItems = computed(() => {
+  let items = normalizedGoods.value.filter(i => i.category === activeCategory.value)
+  
+  // 遍历每一个筛选组
+  Object.keys(activeFilters.value).forEach(label => {
+    const selectedInGroup = activeFilters.value[label]
+    if (selectedInGroup.length > 0) {
+      // 组内逻辑：只要物品包含该组中任意一个选中的标签，就保留 (OR)
+      // 组间逻辑：必须同时满足各个已选组 (AND)
+      items = items.filter(item => selectedInGroup.some(tag => item.tags.includes(tag)))
+    }
+  })
+  return items
+})
+
+// 5. 辅助函数
+const formatTagName = (tag) => tag.includes(':') ? tag.split(':')[1].trim() : tag
+const formatCurrency = (n) => n ? `${Math.floor(n)}两` : '议价'
+
+// 6. 购物车动作
+const addToCart = (item) => {
+  const exist = globalCart.value.find(i => i.id === item.id)
+  if (exist) exist.quantity++
+  else globalCart.value.push({ ...item, quantity: 1 })
+}
+const removeFromCart = (item) => {
+  const exist = globalCart.value.find(i => i.id === item.id)
+  if (exist.quantity > 1) exist.quantity--
+  else globalCart.value = globalCart.value.filter(i => i.id !== item.id)
+}
+const clearCart = () => globalCart.value = []
+const totalPrice = computed(() => globalCart.value.reduce((s, i) => s + (i.price * i.quantity), 0))
+
 </script>
 
 <style scoped>
-/* 整体布局 */
-.shop-container { display: flex; gap: 20px; margin-top: 20px; align-items: flex-start; }
-.catalog-section { flex: 2; }
-.cart-section { flex: 1; background: var(--vp-c-bg-soft); padding: 15px; border-radius: 8px; border: 1px solid var(--vp-c-divider); position: sticky; top: 80px; }
+.shop-container { display: flex; gap: 20px; font-family: monospace; color: #ccc; }
+.catalog-section { flex: 3; }
+.cart-section { flex: 1; background: #1a1a1a; padding: 15px; border-radius: 4px; border: 1px solid #333; position: sticky; top: 20px; height: fit-content; }
 
-/* 头部样式 */
-.section-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--vp-c-divider); padding-bottom: 10px; margin-bottom: 15px; }
-.section-title { margin-top: 0; font-size: 1.2rem; margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
-.clear-btn { font-size: 0.85rem; color: #ff5555; background: none; border: none; cursor: pointer; transition: 0.2s; }
-.clear-btn:hover { text-decoration: underline; }
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.section-title { color: #d9a05b; margin: 0; }
 
-/* ======================================= */
-/* 【新增】：二级导航 Tag 样式 */
-/* ======================================= */
-.category-tabs {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-.cat-btn {
-  background: #111;
-  color: #888;
-  border: 1px solid #444;
-  padding: 8px 16px;
-  font-family: monospace;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  border-radius: 4px;
-}
-.cat-btn:hover {
-  color: #fff;
-  border-color: #777;
-}
-.cat-btn.active {
-  background: #d9a05b;
-  color: #000;
-  border-color: #d9a05b;
-  font-weight: bold;
-}
+.category-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+.cat-btn { background: #222; border: 1px solid #444; color: #888; padding: 6px 12px; cursor: pointer; }
+.cat-btn.active { background: #d9a05b !important; color: #000 !important; font-weight: bold; }
 
-/* 独立筛选面板样式 */
-.filter-panel { background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 12px 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }
-.filter-row { display: flex; align-items: flex-start; gap: 10px; border-bottom: 1px dashed #333; padding-bottom: 12px; }
-.filter-row:last-child { border-bottom: none; padding-bottom: 0; }
-.filter-label { font-weight: bold; color: #888; min-width: 60px; padding-top: 4px; }
-.filter-options { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
+.filter-panel { background: #111; padding: 15px; border: 1px solid #333; margin-bottom: 20px; }
+.filter-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; border-bottom: 1px solid #222; padding-bottom: 10px; }
+.filter-label { color: #666; font-size: 0.8rem; min-width: 60px; }
+.filter-options { display: flex; gap: 8px; flex-wrap: wrap; }
+.tag-btn { background: #222; border: 1px solid #444; color: #ccc; font-size: 0.8rem; padding: 2px 8px; cursor: pointer; border-radius: 3px; }
+.tag-btn.active { border-color: #d9a05b; color: #d9a05b; }
 
-/* 按钮样式强化 */
-.tag-btn { background: var(--vp-c-bg-alt); border: 1px solid #444; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; color: #ccc; }
-.tag-btn:hover { border-color: #d9a05b; color: #fff; }
-.tag-btn.active { background: #d9a05b; color: #000; border-color: #d9a05b; font-weight: bold; }
+.product-card { background: #1a1a1a; border: 1px solid #333; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; }
+.p-name { font-weight: bold; font-size: 1.1rem; color: #fff; margin-bottom: 5px; }
+.p-desc { font-size: 0.85rem; color: #888; margin-bottom: 10px; }
+.p-tags { display: flex; gap: 5px; }
+.p-tag { font-size: 0.7rem; background: #222; padding: 2px 5px; border-radius: 3px; color: #666; }
+.cap-tag { color: #5b9e7b; border: 1px solid #5b9e7b; }
 
-/* 产品卡片样式 */
-.product-card { display: flex; justify-content: space-between; align-items: center; padding: 15px; border: 1px solid var(--vp-c-divider); border-radius: 6px; margin-bottom: 10px; background: var(--vp-c-bg); }
-.p-name { font-weight: bold; font-size: 1.1rem; color: var(--vp-c-text-1); margin-bottom: 4px; }
-.p-desc { font-size: 0.85rem; color: var(--vp-c-text-2); margin-bottom: 10px; line-height: 1.4; }
-.p-tags { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
-.p-tag { font-size: 0.75rem; background: var(--vp-c-bg-soft); padding: 2px 6px; border-radius: 4px; color: var(--vp-c-text-2); }
-.category-tag { border: 1px solid #5b9e7b; color: #5b9e7b; background: transparent; }
-.cap-tag { background: #3d4f45; color: #a4d8bd; }
-.tag-group { padding: 0 !important; background: transparent !important; display: flex; align-items: center; }
-.tag-prefix { color: #888; background: #2a2a2a; padding: 2px 5px; border-radius: 4px 0 0 4px; font-size: 0.7rem; }
-.tag-value { color: #d9a05b; background: #333; padding: 2px 6px; border-radius: 0 4px 4px 0; font-weight: bold; }
+.p-price { color: #d9a05b; font-weight: bold; margin-bottom: 5px; text-align: right; }
+.add-btn { background: #d9a05b; color: #000; border: none; padding: 5px 15px; cursor: pointer; font-weight: bold; }
 
-.product-action { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; min-width: 80px;}
-.p-price { color: #d9a05b; font-weight: bold; }
-.add-btn { background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); padding: 4px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; }
-.add-btn:hover { background: #5b9e7b; color: #fff; border-color: #5b9e7b; }
-
-.cart-items { min-height: 100px; max-height: 400px; overflow-y: auto; margin-bottom: 15px; }
-.cart-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px dashed var(--vp-c-divider); }
-.c-info { display: flex; flex-direction: column; gap: 4px; }
-.c-name { font-size: 0.9rem; font-weight: bold; }
-.c-cap { font-size: 0.8rem; color: #5b9e7b; }
-.c-right { display: flex; align-items: center; gap: 10px; }
-.c-price { color: #d9a05b; font-size: 0.9rem; }
-.remove-btn { color: #ff5555; cursor: pointer; background: none; border: none; font-size: 1.2rem; }
-.cart-summary { border-top: 2px solid var(--vp-c-divider); padding-top: 15px; display: flex; flex-direction: column; gap: 8px; }
-.summary-row { display: flex; justify-content: space-between; font-size: 0.95rem; }
-.highlight-text { color: #5b9e7b; font-weight: bold; }
-.total-cost { font-size: 1.1rem; font-weight: bold; margin-top: 5px; }
-.total-price { color: #d9a05b; font-size: 1.3rem; }
-.empty-state, .empty-cart { color: var(--vp-c-text-3); font-size: 0.9rem; text-align: center; padding: 20px 0; }
-
-@media (max-width: 768px) {
-  .shop-container { flex-direction: column; }
-  .cart-section { width: 100%; position: static; }
-}
+.cart-item { border-bottom: 1px dashed #333; padding: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+.total-row { display: flex; justify-content: space-between; margin-top: 15px; font-weight: bold; }
+.total-price { color: #d9a05b; font-size: 1.2rem; }
+.clear-btn, .clear-cart-btn { background: none; border: 1px solid #555; color: #888; cursor: pointer; font-size: 0.7rem; }
+.empty-state, .empty-cart { padding: 30px; text-align: center; color: #444; }
 </style>

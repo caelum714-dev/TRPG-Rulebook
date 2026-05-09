@@ -6,8 +6,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // 使用你代码里提供的最新路径
-const mdFile = path.resolve('rules/item/vehicleDN.md'); 
-const outputFile = path.resolve('.vitepress/theme/database/vehicle.js');
+const mdFile = path.resolve('rules/3.item/vehicleDN.md'); 
+const outputFile = path.resolve('.vitepress/theme/database/2.vehicle.js');
 
 function parseVehiclesToData() {
   let allVehicles = [];

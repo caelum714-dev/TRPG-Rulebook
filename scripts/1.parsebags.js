@@ -6,8 +6,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const mdFile = path.resolve(__dirname, '../rules/equipment/armors/bag.md'); 
-const outputFile = path.resolve(__dirname, '../.vitepress/theme/database/bag.js');
+const mdFile = path.resolve(__dirname, '../rules/2.equipment/armors/bag.md'); 
+const outputFile = path.resolve(__dirname, '../.vitepress/theme/database/1.bag.js');
 
 function parseMarkdownToData() {
   let allEquipments = [];

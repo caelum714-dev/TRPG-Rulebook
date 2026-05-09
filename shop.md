@@ -9,10 +9,10 @@ import ShopTerminal from './.vitepress/theme/ShopTerminal.vue'
 
 // 1. 引入扁平化数据库
 // 这里使用了 as 关键字重命名，方便区分不同类型的数据
-import { bags } from './.vitepress/theme/database/bag.js'
+import { bags } from './.vitepress/theme/database/1.bag.js'
 // 【未来扩展预留】：当你有了载具、武器和防具数据后，像下面这样解除注释并引入
-import { vehicles } from './.vitepress/theme/database/vehicle.js'
-// import { weapons } from './.vitepress/theme/database/weapon.js'
+import { vehicles } from './.vitepress/theme/database/2.vehicle.js'
+import { weapons } from './.vitepress/theme/database/3.weapon.js'  
 // import { armors } from './.vitepress/theme/database/armor.js'
 
 // 2. 状态控制：如果 activeTab 是 null，就显示主页；如果有值，就显示对应的商店
@@ -25,8 +25,8 @@ const shopSectors = {
     title: '战术武装许可',
     desc: '未经蜃都安保局备案的动能枪械、近战冷兵器、战术护甲与单兵护盾。[暂未开放]',
     // 【未来应用】：使用展开语法 (...) 将武器和防具数组合并到一起
-    // data: [...weapons, ...armors]
-    data: [] 
+    data: [...weapons]
+  
   },
   '后勤与远行保障': {
     icon: '📦',
